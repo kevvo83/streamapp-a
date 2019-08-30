@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "value_kstreamprodtest",
+  "namespace": "data.avro",
+  "fields": [
+    {
+      "name": "ts",
+      "type": "long"
+    },
+    {
+      "name": "pressure_data",
+      "type": "double"
+    },
+    {
+      "name": "sensorid",
+      "type": "string"
+    }
+  ]
+}

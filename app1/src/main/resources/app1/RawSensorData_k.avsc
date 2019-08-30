@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "key_kstreamprodtest",
+  "namespace": "data.avro",
+  "fields": [
+    {
+      "name": "sensorid",
+      "type": "string"
+    }
+  ]
+}
