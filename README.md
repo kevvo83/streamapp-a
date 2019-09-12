@@ -2,18 +2,15 @@
 
 ### Introduction
 
-Experiments building Event driven IoT Sensor device using - 
-* Kafka Producers
+Build of a Reactive, Event-Driven e-commerce application as detailed in [this link](https://docs.confluent.io/current/tutorials/examples/microservices-orders/docs/index.html?_ga=2.203721232.144266676.1568256424-250089943.1568087216).
+
+Used -
+* Confluent Cloud (Kafka)
+* Kafka (Docker)
 * Kafka Connect
 * Kafka Streams
-* Kafka test-utils
-* CDC Streams with Debezium to Postgres (docker images' [url](https://github.com/debezium/docker-images))
-* Postgres (docker image with logical decoding plugin and PostGIS for geospatial queries/data)
-* AWS RDS
-* Scalacheck Generators to simulate IoT device data
-
-### System Diagram
-(pending)
+* Akka-Http
+* Debezium Postgres
 
 ### Sources, Inspirations
 
