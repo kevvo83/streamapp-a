@@ -3,11 +3,14 @@ package app1
 import java.io.File
 import org.apache.avro.Schema
 import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerConfig, ProducerRecord, RecordMetadata}
-import com.typesafe.scalalogging.LazyLogging
 import org.apache.avro.generic.{GenericData, GenericRecord}
 import org.apache.kafka.common.header.internals.{RecordHeader, RecordHeaders}
 
-object MainProducer extends App with RandomSensorData with KafkaClusterConfig with LazyLogging {
+import org.slf4j.{Logger, LoggerFactory}
+
+object MainProducer extends App with RandomSensorData with KafkaClusterConfig {
+
+  final val logger: Logger = LoggerFactory.getLogger(MainProducer.getClass)
 
   val gf: String = if (args.length > 0) args(0) else ""
   val pf: String = if (args.length > 1) args(1) else ""
@@ -35,10 +38,6 @@ object MainProducer extends App with RandomSensorData with KafkaClusterConfig wi
       val valuesmap: Map[String, Any] = SensorDataToMapValues(sensor_d)
       for (key <- valuesmap.keys) val_r.put(key, valuesmap.get(key).get)
 
-      //val_r.put("ts", sensor_d.ts)
-      //val_r.put("pressure_data", sensor_d.pressure_data)
-      //val_r.put("sensorid", sensor_d.sensorID)
-
       key_r.put("sensorid", sensor_d.sensorid)
 
       val kr = new ProducerRecord[GenericRecord, GenericRecord](
@@ -51,8 +50,6 @@ object MainProducer extends App with RandomSensorData with KafkaClusterConfig wi
                                                                                 "targetsystem",
                                                                                 "ccloud".getBytes))
                                                 )
-
-      kp.send(kr)
 
       kp.send(kr, new Callback() {
         override def onCompletion(metadata: RecordMetadata, exception: Exception): Unit = {

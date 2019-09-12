@@ -26,6 +26,4 @@ trait RandomSensorData {
     fieldNames.zip(fieldVals) toMap
   }
 
-  //(1 #:: Stream(2,totalNumIters)) map[SensorData] (e => x.sample.get)
-
 }
