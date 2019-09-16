@@ -21,6 +21,9 @@ services:
     ports:
       - 9092:9092
       - 29092:29092
+    #command: /bin/bash -c "/scripts/kafka-basic-os-setup.sh"
+    volumes:
+      - ./scripts:/scripts
     depends_on:
       - zookeeper
     environment:

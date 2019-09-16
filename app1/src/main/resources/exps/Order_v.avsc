@@ -1,7 +1,38 @@
+[
 {
   "type": "record",
-  "name": "value_kstreamprodtest",
-  "namespace": "data.avro",
+  "name": "productRecord",
+  "namespace": "app1.exps",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "manufacturer",
+      "type": "string"
+    },
+    {
+      "name": "countryOfOrigin",
+      "type": "string"
+    }
+  ]
+},
+{
+  "type": "record",
+  "name": "orderStateRecord",
+  "namespace": "app1.exps",
+  "fields": [
+    {
+      "name": "currentState",
+      "type": "string"
+    }
+  ]
+},
+{
+  "type": "record",
+  "name": "orderRecord",
+  "namespace": "app1.exps",
   "fields": [
     {
       "name": "customerId",
@@ -9,11 +40,17 @@
     },
     {
       "name": "orderState",
-      "type": "double"
+      "type": {
+        "type": "array",
+        "items": "app1.exps.orderStateRecord"
+      }
     },
     {
       "name": "product",
-      "type": "string"
+      "type": {
+        "type": "array",
+        "items": "app1.exps.productRecord"
+      }
     },
     {
       "name": "quantity",
@@ -25,3 +62,4 @@
     }
   ]
 }
+]
