@@ -1,6 +1,5 @@
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
-import spray.json.DefaultJsonProtocol
-
+import spray.json.{DefaultJsonProtocol, PrettyPrinter}
 import java.time.{Clock, Instant, ZoneId}
 
 package object exps extends SprayJsonSupport with DefaultJsonProtocol {
@@ -12,12 +11,20 @@ package object exps extends SprayJsonSupport with DefaultJsonProtocol {
   object AkkaServerDescription {
     def apply(name: String, version: String): AkkaServerDescription = new AkkaServerDescription(name, version)
 
+    implicit val printer = PrettyPrinter
+
     implicit def jsonFormatter: RootJsonFormat[AkkaServerDescription] =
       jsonFormat2[String, String, AkkaServerDescription](AkkaServerDescription.apply)
   }
 
 
-  final case class Order(customerid: Int, itemids: List[Int], txnts: Long)
+
+  /*final case class Order(customerid: Int, itemids: List[Int], txnts: Long)
+
+  case class Product(name: String, manufacturerCode: Long)
+
+  final case class OrderD(id: String, customerId: Long, orderState: OrderState,
+                          product: Product, quantity: Int, unitPrice: Double)
 
   object Order {
     def apply(customerid: Int, itemids: List[Int], txnts: Long) = new Order(customerid: Int,
@@ -25,8 +32,7 @@ package object exps extends SprayJsonSupport with DefaultJsonProtocol {
                                                                               txnts: Long)
 
     implicit def jsonFormatter: RootJsonFormat[Order] = jsonFormat3[Int, List[Int], Long, Order](Order.apply)
-  }
-
+  }*/
 
   // Just for experimentation with implicit conversions
   case class A(elem: String)

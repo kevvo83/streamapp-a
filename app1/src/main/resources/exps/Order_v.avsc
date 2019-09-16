@@ -1,0 +1,27 @@
+{
+  "type": "record",
+  "name": "value_kstreamprodtest",
+  "namespace": "data.avro",
+  "fields": [
+    {
+      "name": "customerId",
+      "type": "long"
+    },
+    {
+      "name": "orderState",
+      "type": "double"
+    },
+    {
+      "name": "product",
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "type": "int"
+    },
+    {
+      "name": "unitPrice",
+      "type": "double"
+    }
+  ]
+}

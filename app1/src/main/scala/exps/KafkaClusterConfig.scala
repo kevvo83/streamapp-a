@@ -29,19 +29,24 @@ trait KafkaClusterConfig {
     lazy val kcProps: juProps = new juProps()
     kcProps.put(CommonClientConfigs.CLIENT_ID_CONFIG, "blahblah")
     kcProps.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, props.getProperty("CCLOUD_BROKERS"))
-    kcProps.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_SSL")
-    kcProps.put(SaslConfigs.SASL_MECHANISM, "PLAIN")
+    kcProps.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG,
+                Option(props.getProperty("SECURITY_PROTOCOL_CONFIG")).getOrElse("SASL_SSL"))
+    kcProps.put(SaslConfigs.SASL_MECHANISM,
+                Option(props.getProperty("SECURITY_PROTOCOL_CONFIG")).getOrElse("PLAIN"))
     kcProps.put(SaslConfigs.SASL_JAAS_CONFIG,
-      s"""org.apache.kafka.common.security.plain.PlainLoginModule """ +
-        s"""required username="${props.getProperty("CCLOUD_ACCESS_KEY_ID")}" """ +
-        s"""password="${props.getProperty("CCLOUD_SECRET_ACCESS_KEY")}";"""
-    )
+                Option(props.getProperty("")).
+                  getOrElse(s"""org.apache.kafka.common.security.plain.PlainLoginModule """ +
+                            s"""required username="${props.getProperty("CCLOUD_ACCESS_KEY_ID")}" """ +
+                            s"""password="${props.getProperty("CCLOUD_SECRET_ACCESS_KEY")}";"""))
 
     // Schema Registry Properties
     kcProps.put("schema.registry.url", props.getProperty("CCLOUD_SCHEMA_REGISTRY"))
-    kcProps.put("basic.auth.credentials.source", "USER_INFO")
-    kcProps.put("basic.auth.user.info", s"""${props.getProperty("CCLOUD_SCHEMA_REGISTRY_ACCESS_KEY_ID")}:""" +
-      s"""${props.getProperty("CCLOUD_SCHEMA_REGISTRY_SECRET_ACCESS_KEY")}""")
+    kcProps.put("basic.auth.credentials.source",
+                  Option(props.getProperty("CCLOUD_SCHEMA_REGISTRY_CRED_SOURCE")).getOrElse("USER_INFO"))
+    kcProps.put("basic.auth.user.info",
+                  Option(props.getProperty("CCLOUD_SCHEMA_REGISTRY_USER_INFO")).
+                    getOrElse(s"""${props.getProperty("CCLOUD_SCHEMA_REGISTRY_ACCESS_KEY_ID")}:""" +
+                              s"""${props.getProperty("CCLOUD_SCHEMA_REGISTRY_SECRET_ACCESS_KEY")}"""))
 
     // Kafka Producer Properties
     lazy val kpProps: juProps = new juProps()

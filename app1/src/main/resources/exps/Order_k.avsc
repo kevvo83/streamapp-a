@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "key_order",
+  "namespace": "data.avro",
+  "fields": [
+    {
+      "name": "id",
+      "type": "String"
+    }
+  ]
+}

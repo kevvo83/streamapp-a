@@ -1,6 +1,10 @@
 
 object session {
 
+  val x: List[Int] = List(1,2,3)
+
+
+
   case class User(val name: String)
 
   class UserRepository {

@@ -14,17 +14,22 @@ import scala.io.StdIn
 import scala.util.{Failure, Success, Try}
 
 
-object WebServ extends App {
+object WebServTest extends App with KafkaClusterConfig {
 
   implicit val system = ActorSystem("akka-http-rest-server")
   implicit val materializer = ActorMaterializer()
   implicit val ec = system.dispatcher
 
+  val gprop: String = args(0)
+  val pprop: String = args(1)
+
+  val kafkaClusterConfig: KafkaClusterConfig = new KafkaClusterConfig(gprop, pprop)
+
   System.setProperty("log4j.configuration",getClass.getResource("../log4j.properties").toString)
-  final val logger: Logger = LoggerFactory.getLogger(WebServ.getClass)
+  final val logger: Logger = LoggerFactory.getLogger(WebServTest.getClass)
 
   val host = "localhost"
-  val port = 9099
+  val port = 9089
 
   val routes: Route = concat(
     path("") {
@@ -46,7 +51,7 @@ object WebServ extends App {
     path("enter-order-details") {
       post {
         entity(as[Order]) { specificorder: Order => {
-            logger.info(s"Txn entered ${specificorder.customerid}, ${specificorder.itemids}")
+            logger.info(s"Txn entered ${specificorder.id}, ${specificorder.customerId}")
             complete(StatusCodes.Created)
           }
         }
@@ -54,9 +59,37 @@ object WebServ extends App {
     }
   )
 
+  val routesNew: Route = {
+    path("") {
+      get {
+        complete("Akka HTTP Server is Up")
+      }
+    } ~
+    path("server-version") {
+      get {
+        val server: AkkaServerDescription = AkkaServerDescription("TestWebServer1 New Route!", "2.0.1")
+        complete(HttpEntity(ContentTypes.`application/json`, server.toJson.compactPrint))
+      }
+    } ~
+    path("server-version-pretty") {
+      get {
+        val server: AkkaServerDescription = AkkaServerDescription("TestWebServer1 Another New Route!", "2.0.2")
+        complete(server)
+      }
+    } /*~
+    path("/orders") {
+      post {
+        entity(as[OrderD]) { specificorder: OrderD => {
+
+        }
+        }
+      }
+    }*/
+  }
+
   val server: AkkaServerDescription = AkkaServerDescription("TestWebServer1", "2.0.0")
 
-  val httpServerFuture = Http().bindAndHandle(routes, host, port)
+  val httpServerFuture = Http().bindAndHandle(routesNew, host, port)
 
   httpServerFuture onComplete[Unit] (x => {
     x match {
