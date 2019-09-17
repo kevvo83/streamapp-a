@@ -17,13 +17,14 @@ services:
 
   kafka:
     image: confluentinc/cp-enterprise-kafka:5.3.0
-    hostname: kafka
+    hostname: kafkahost
     ports:
       - 9092:9092
       - 29092:29092
     #command: /bin/bash -c "/scripts/kafka-basic-os-setup.sh"
     volumes:
       - ./scripts:/scripts
+      #- ./kafka.properties:/etc/kafka/kafka.properties
     depends_on:
       - zookeeper
     environment:

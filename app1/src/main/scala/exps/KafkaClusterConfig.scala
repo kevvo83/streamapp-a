@@ -37,8 +37,8 @@ trait KafkaClusterConfig {
     val ccloud_access_key_id      = Option(props.getProperty("CCLOUD_ACCESS_KEY_ID")).getOrElse("")
     val ccloud_secret_access_key  = Option(props.getProperty("CCLOUD_SECRET_ACCESS_KEY")).getOrElse("")
     val ccloud_sasl_jaas          = s"""org.apache.kafka.common.security.plain.PlainLoginModule """ +
-                                    s"""required username="${props.getProperty("CCLOUD_ACCESS_KEY_ID")}" """ +
-                                    s"""password="${props.getProperty("CCLOUD_SECRET_ACCESS_KEY")}";"""
+                                    s"""required username="${ccloud_access_key_id}" """ +
+                                    s"""password="${ccloud_secret_access_key}";"""
 
     if ((ccloud_access_key_id != "") && (ccloud_secret_access_key != "")){
       kcProps.put(SaslConfigs.SASL_JAAS_CONFIG,ccloud_sasl_jaas)

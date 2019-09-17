@@ -1,7 +1,7 @@
 {
   "type": "record",
-  "name": "key_order",
-  "namespace": "data.avro",
+  "name": "orders_k",
+  "namespace": "app1.exps",
   "fields": [
     {
       "name": "id",

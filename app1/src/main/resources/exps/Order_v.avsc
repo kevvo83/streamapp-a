@@ -1,37 +1,6 @@
-[
 {
   "type": "record",
-  "name": "productRecord",
-  "namespace": "app1.exps",
-  "fields": [
-    {
-      "name": "id",
-      "type": "string"
-    },
-    {
-      "name": "manufacturer",
-      "type": "string"
-    },
-    {
-      "name": "countryOfOrigin",
-      "type": "string"
-    }
-  ]
-},
-{
-  "type": "record",
-  "name": "orderStateRecord",
-  "namespace": "app1.exps",
-  "fields": [
-    {
-      "name": "currentState",
-      "type": "string"
-    }
-  ]
-},
-{
-  "type": "record",
-  "name": "orderRecord",
+  "name": "orders_v",
   "namespace": "app1.exps",
   "fields": [
     {
@@ -41,15 +10,35 @@
     {
       "name": "orderState",
       "type": {
-        "type": "array",
-        "items": "app1.exps.orderStateRecord"
+        "type": "record",
+        "name": "OrderStateRecord",
+        "fields": [
+          {
+            "name": "currentState",
+            "type": "string"
+          }
+        ]
       }
     },
     {
       "name": "product",
       "type": {
-        "type": "array",
-        "items": "app1.exps.productRecord"
+        "type": "record",
+        "name": "ProductRecord",
+        "fields": [
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "manufacturer",
+            "type": "string"
+          },
+          {
+            "name": "countryOfOrigin",
+            "type": "string"
+          }
+        ]
       }
     },
     {
@@ -62,4 +51,3 @@
     }
   ]
 }
-]

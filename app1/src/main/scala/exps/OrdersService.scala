@@ -56,10 +56,14 @@ object OrdersService extends App with KafkaClusterConfig {
             val val_r: GenericRecord = new GenericData.Record(val_schema)
             val key_r: GenericRecord = new GenericData.Record(key_schema)
 
-            //val valuesmap: Map[String, Any] = SensorDataToMapValues(sensor_d)
-            //for (key <- valuesmap.keys) val_r.put(key, valuesmap.get(key).get)
 
-            key_r.put("sensorid", specificorder.id)
+            key_r.put("id", specificorder.id)
+
+            val_r.put("customerId", specificorder.customerId)
+            val_r.put("orderState", specificorder.orderState)
+            val_r.put("product", specificorder.product)
+            val_r.put("quantity", specificorder.quantity)
+            val_r.put("unitPrice", specificorder.unitPrice)
 
             val kr = new ProducerRecord[GenericRecord, GenericRecord](
                                                             kafkaClusterConfig.producerProps.getProperty("ORDERTOPIC"),
@@ -94,7 +98,7 @@ object OrdersService extends App with KafkaClusterConfig {
       get {
         val clock: Clock = Clock.system(ZoneId.of("GMT"))
         val time: String = Instant.now(clock).toString
-        complete(HttpEntity(ContentTypes.`application/json`, time))
+        complete(HttpEntity(ContentTypes.`application/json`, s"""Generic GET request sent at ${time}"""))
       }
     }
   }
