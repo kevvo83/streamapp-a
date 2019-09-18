@@ -4,7 +4,7 @@
 
 Build of a Reactive, Event-Driven e-commerce application as detailed in [this link](https://docs.confluent.io/current/tutorials/examples/microservices-orders/docs/index.html?_ga=2.203721232.144266676.1568256424-250089943.1568087216).
 
-Used -
+### Tech Stack
 * Confluent Cloud (Kafka)
 * Kafka (Docker)
 * Kafka Connect
